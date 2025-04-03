@@ -166,7 +166,7 @@ export function PartnershipBanner() {
             }}
             className="flex justify-center"
           >
-            <a href="https://flexi-care.onrender.com/">
+            <a href="http://localhost:5000" target="_blank">
             <Button 
               size="lg"
               className="group relative overflow-hidden bg-white/10 hover:bg-white/20 border border-white/30 hover:border-green-300/50 text-white px-8 py-6 rounded-xl transition-all duration-300"
