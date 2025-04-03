@@ -24,6 +24,7 @@ export default function DoctorSchedulePage() {
   const [selectedDay, setSelectedDay] = useState<string>(new Date().toISOString().split("T")[0])
   const [statusFilter, setStatusFilter] = useState<string>("all")
   const [appointmentTypeFilter, setAppointmentTypeFilter] = useState<string>("all")
+  const [specialtyFilter, setSpecialtyFilter] = useState<string>("all")
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null)
   const [isAppointmentDetailsOpen, setIsAppointmentDetailsOpen] = useState(false)
   const [appointments, setAppointments] = useState<Appointment[]>([])
@@ -138,7 +139,8 @@ export default function DoctorSchedulePage() {
     const dayMatch = apt.date === selectedDay
     const statusMatch = statusFilter === "all" || apt.status === statusFilter
     const typeMatch = appointmentTypeFilter === "all" || apt.type === appointmentTypeFilter
-    return dayMatch && statusMatch && typeMatch
+    const specialtyMatch = specialtyFilter === "all" || apt.specialty === specialtyFilter
+    return dayMatch && statusMatch && typeMatch && specialtyMatch
   })
 
   // Group appointments by time slot for the selected day
@@ -278,6 +280,20 @@ export default function DoctorSchedulePage() {
                   </SelectContent>
                 </Select>
               </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Specialty</label>
+                <Select value={specialtyFilter} onValueChange={(value) => setSpecialtyFilter(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select specialty" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Specialties</SelectItem>
+                    <SelectItem value="Physiotherapy">Physiotherapy</SelectItem>
+                    {/* Add other specialties as needed */}
+                  </SelectContent>
+                </Select>
+              </div>
             </CardContent>
           </Card>
 
@@ -402,30 +418,43 @@ export default function DoctorSchedulePage() {
                                   <div>
                                     <p className="font-medium">{appointment.patientName}</p>
                                     <p className="text-xs text-muted-foreground">{appointment.patientEmail}</p>
+                                    <p className="text-xs text-purple-600">{appointment.specialty}</p>
                                   </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                  <Badge variant="outline" className={getStatusColor(appointment.status)}>
-                                    {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
-                                  </Badge>
-                                  {appointment.type === "telemedicine" ? (
-                                    <Badge variant="outline" className="bg-purple-50 text-purple-700">
-                                      <Video className="h-3 w-3 mr-1" />
-                                      Video
+                                <div className="flex flex-col items-end gap-2">
+                                  <div className="flex items-center gap-2">
+                                    <Badge variant="outline" className={getStatusColor(appointment.status)}>
+                                      {appointment.status.charAt(0).toUpperCase() + appointment.status.slice(1)}
                                     </Badge>
-                                  ) : (
-                                    <Badge variant="outline" className="bg-blue-50 text-blue-700">
-                                      <User className="h-3 w-3 mr-1" />
-                                      In-person
-                                    </Badge>
-                                  )}
+                                    {appointment.type === "telemedicine" ? (
+                                      <Badge variant="outline" className="bg-purple-50 text-purple-700">
+                                        <Video className="h-3 w-3 mr-1" />
+                                        Video
+                                      </Badge>
+                                    ) : (
+                                      <Badge variant="outline" className="bg-blue-50 text-blue-700">
+                                        <User className="h-3 w-3 mr-1" />
+                                        In-person
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-xs text-muted-foreground">
+                                    Created: {new Date(appointment.createdAt).toLocaleDateString()}
+                                  </p>
                                 </div>
                               </div>
-                              <div className="flex items-center text-sm text-muted-foreground">
-                                <Clock className="h-3 w-3 mr-1" />
-                                <span>
-                                  {formatTime(appointment.startTime)} - {formatTime(appointment.endTime)}
-                                </span>
+                              <div className="flex items-center justify-between text-sm text-muted-foreground">
+                                <div className="flex items-center">
+                                  <Clock className="h-3 w-3 mr-1" />
+                                  <span>
+                                    {formatTime(appointment.startTime)} - {formatTime(appointment.endTime)}
+                                  </span>
+                                </div>
+                                {appointment.reason && (
+                                  <span className="text-xs italic truncate max-w-[200px]">
+                                    Reason: {appointment.reason}
+                                  </span>
+                                )}
                               </div>
                             </div>
                           ))
@@ -464,6 +493,7 @@ export default function DoctorSchedulePage() {
                 <div>
                   <h3 className="font-medium">{selectedAppointment.patientName}</h3>
                   <p className="text-sm text-muted-foreground">{selectedAppointment.patientEmail}</p>
+                  <p className="text-sm text-purple-600">{selectedAppointment.specialty}</p>
                 </div>
               </div>
 
@@ -490,6 +520,28 @@ export default function DoctorSchedulePage() {
                 </div>
               </div>
 
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm font-medium">Created At</p>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(selectedAppointment.createdAt).toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium">Last Updated</p>
+                  <p className="text-sm text-muted-foreground">
+                    {new Date(selectedAppointment.updatedAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-medium">Doctor</p>
+                <p className="text-sm text-muted-foreground">
+                  {selectedAppointment.doctorName} - {selectedAppointment.specialty}
+                </p>
+              </div>
+
               {selectedAppointment.reason && (
                 <div>
                   <p className="text-sm font-medium">Reason for Visit</p>
@@ -503,6 +555,11 @@ export default function DoctorSchedulePage() {
                   <p className="text-sm text-muted-foreground mt-1">{selectedAppointment.notes}</p>
                 </div>
               )}
+
+              <div>
+                <p className="text-sm font-medium">Time Slot ID</p>
+                <p className="text-sm text-muted-foreground">{selectedAppointment.timeSlotId}</p>
+              </div>
             </div>
           )}
 
