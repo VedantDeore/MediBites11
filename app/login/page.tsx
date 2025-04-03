@@ -32,7 +32,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
       <Link href="/" className="mb-8 flex items-center gap-2">
         <HeartPulse className="h-8 w-8 text-green-600" />
-        <span className="text-2xl font-bold">MediCare</span>
+        <span className="text-2xl font-bold">MediBites</span>
       </Link>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">

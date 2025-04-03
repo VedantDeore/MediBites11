@@ -100,7 +100,7 @@
 //           </svg>
 //         </div>
 //         <div>
-//           <span className="text-xl font-semibold">MediCare</span>
+//           <span className="text-xl font-semibold">MediBites</span>
 //           <div className="text-xs text-gray-500">Research Portal</div>
 //         </div>
 //       </div>

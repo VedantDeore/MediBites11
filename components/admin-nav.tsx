@@ -46,7 +46,7 @@ export function AdminNav() {
       <div className="flex h-14 items-center border-b px-4">
         <Link href="/" className="flex items-center gap-2">
           <HeartPulse className="h-6 w-6 text-green-600" />
-          <span className="text-lg font-bold">MediCare Admin</span>
+          <span className="text-lg font-bold">MediBites Admin</span>
         </Link>
       </div>
       <div className="flex-1 overflow-auto py-2">

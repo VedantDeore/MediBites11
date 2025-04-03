@@ -129,7 +129,7 @@ export default function DoctorSupportPage() {
   const supportArticles: SupportArticle[] = [
     {
       id: "art1",
-      title: "Getting Started with MediCare Doctor Dashboard",
+      title: "Getting Started with MediBites Doctor Dashboard",
       category: "Guides",
       excerpt: "Learn how to navigate the dashboard, set up your profile, and manage your first patient appointments.",
       views: 1245,
@@ -155,7 +155,7 @@ export default function DoctorSupportPage() {
       id: "art4",
       title: "Integrating with External Medical Systems",
       category: "Technical",
-      excerpt: "How to connect MediCare with your existing EMR, laboratory systems, and other medical software.",
+      excerpt: "How to connect MediBites with your existing EMR, laboratory systems, and other medical software.",
       views: 654,
       helpful: 87,
     },
@@ -171,7 +171,7 @@ export default function DoctorSupportPage() {
       id: "art6",
       title: "Optimizing Your Clinical Workflow",
       category: "Best Practices",
-      excerpt: "Strategies to improve efficiency in your practice using MediCare's automation features.",
+      excerpt: "Strategies to improve efficiency in your practice using MediBites's automation features.",
       views: 765,
       helpful: 91,
     },
@@ -278,7 +278,7 @@ export default function DoctorSupportPage() {
         <CheckCircle2 className="h-4 w-4 text-green-600" />
         <AlertTitle className="text-green-600">All Systems Operational</AlertTitle>
         <AlertDescription>
-          All MediCare services are running normally. View our{" "}
+          All MediBites services are running normally. View our{" "}
           <a href="#" className="text-green-600 underline">
             system status page
           </a>{" "}
@@ -557,7 +557,7 @@ export default function DoctorSupportPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Send us an email and we'll get back to you within 24 hours.</p>
-                <p className="font-medium mt-2">doctor-support@medicare.com</p>
+                <p className="font-medium mt-2">doctor-support@MediBites.com</p>
                 <p className="text-sm text-muted-foreground mt-1">For non-urgent inquiries</p>
               </CardContent>
             </Card>

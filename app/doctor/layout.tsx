@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MediCare - Doctor Portal",
+  title: "MediBites - Doctor Portal",
   description: "Manage your patients and appointments",
 }
 

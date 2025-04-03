@@ -44,7 +44,7 @@ export default function DoctorLoginPage() {
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2 mb-6">
             <HeartPulse className="h-6 w-6 text-purple-600" />
-            <span className="text-xl font-bold">MediCare</span>
+            <span className="text-xl font-bold">MediBites</span>
           </Link>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Doctor Login</h1>
           <p className="mt-2 text-gray-600">Sign in to your doctor dashboard</p>

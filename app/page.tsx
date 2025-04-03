@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ArrowRight, Calendar, FileText, HeartPulse, Phone, PieChart, Search, Stethoscope, Users } from "lucide-react"
+import { ArrowRight, Calendar, Dumbbell, FileText, HeartPulse, Phone, PieChart, Search, Stethoscope, Users } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,7 @@ import { useAuth } from "@/lib/auth-context"
 import { type BlogPost, formatPublishedDate, getHealthBlogs } from "@/lib/blog-service"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AnimatedHealth } from "@/components/animated-health"
+import { PartnershipBanner } from "@/components/partner"
 
 export default function Home() {
   const { user } = useAuth()
@@ -54,7 +55,7 @@ export default function Home() {
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <HeartPulse className="h-6 w-6 text-green-600" />
-            <span className="text-xl font-bold">MediCare</span>
+            <span className="text-xl font-bold">MediBites</span>
           </div>
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-medium hover:text-green-600 transition-colors">
@@ -189,9 +190,9 @@ export default function Home() {
               <Card>
                 <CardHeader>
                   <Search className="h-10 w-10 text-green-600 mb-2" />
-                  <CardTitle>Find Specialists</CardTitle>
+                  <CardTitle>FlexiCare</CardTitle>
                   <CardDescription>
-                    Search for specialists based on specialty, location, and availability.
+                    Get a personalized AI workout guide
                   </CardDescription>
                 </CardHeader>
                 <CardFooter>
@@ -547,7 +548,7 @@ export default function Home() {
                 <CardContent>
                   <div className="flex items-center gap-2 mb-4">
                     <Phone className="h-5 w-5 text-green-600" />
-                    <span className="text-xl font-bold">1-800-MEDICARE</span>
+                    <span className="text-xl font-bold">1-800-MediBites</span>
                   </div>
                   <p className="text-sm text-muted-foreground">
                     For medical advice and non-emergency situations, our medical professionals are available 24/7.
@@ -597,13 +598,14 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <PartnershipBanner/>
       <footer className="w-full border-t bg-gray-50 py-12">
         <div className="container px-4 md:px-6">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
             <div className="col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <HeartPulse className="h-6 w-6 text-green-600" />
-                <span className="text-xl font-bold">MediCare</span>
+                <span className="text-xl font-bold">MediBites</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Providing comprehensive healthcare solutions for a healthier tomorrow.
@@ -638,7 +640,7 @@ export default function Home() {
               <h3 className="text-lg font-medium mb-4">Company</h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="#" className="text-muted-foreground hover:text-green-600 transition-colors">
+                  <Link href="/about-us" className="text-muted-foreground hover:text-green-600 transition-colors">
                     About Us
                   </Link>
                 </li>
@@ -685,8 +687,9 @@ export default function Home() {
               </ul>
             </div>
           </div>
+          {/* Add this section right after your main hero section */}
           <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-            <p>© 2023 MediCare. All rights reserved.</p>
+            <p>© 2023 MediBites. All rights reserved.</p>
           </div>
         </div>
       </footer>

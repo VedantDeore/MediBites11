@@ -1963,7 +1963,7 @@ export default function PatientAnalysisPage() {
                       <SelectItem value="Comprehensive">Comprehensive</SelectItem>
                       <SelectItem value="Basic">Basic</SelectItem>
                       <SelectItem value="Catastrophic">Catastrophic</SelectItem>
-                      <SelectItem value="Medicare">Medicare</SelectItem>
+                      <SelectItem value="MediBites">MediBites</SelectItem>
                       <SelectItem value="Medicaid">Medicaid</SelectItem>
                       <SelectItem value="Other">Other</SelectItem>
                     </SelectContent>

@@ -302,11 +302,11 @@ export default function DoctorSettingsPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="practiceName">Practice Name</Label>
-                  <Input id="practiceName" defaultValue="MediCare Health Center" />
+                  <Input id="practiceName" defaultValue="MediBites Health Center" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="practiceWebsite">Practice Website</Label>
-                  <Input id="practiceWebsite" defaultValue="https://medicarehealth.com" />
+                  <Input id="practiceWebsite" defaultValue="https://MediBiteshealth.com" />
                 </div>
               </div>
 

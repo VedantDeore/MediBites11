@@ -60,7 +60,7 @@ export function AdminMobileHeader({ title }: AdminMobileHeaderProps) {
             <div className="flex h-14 items-center border-b px-4">
               <Link href="/" className="flex items-center gap-2">
                 <HeartPulse className="h-6 w-6 text-green-600" />
-                <span className="text-lg font-bold">MediCare Admin</span>
+                <span className="text-lg font-bold">MediBites Admin</span>
               </Link>
             </div>
             <nav className="grid gap-1 p-2">

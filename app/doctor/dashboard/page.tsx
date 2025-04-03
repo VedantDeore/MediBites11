@@ -24,34 +24,72 @@ export default function DoctorDashboard() {
   const [todayAppointments, setTodayAppointments] = useState([])
   const [upcomingAppointments, setUpcomingAppointments] = useState([])
   const [doctorName, setDoctorName] = useState("")
-  const [stats, setStats] = useState({
-    totalPatients: 0,
-    activePatients: 0,
-    newPatients: 0,
-    patientRetentionRate: 0,
-    pendingAppointments: 0,
-    completedAppointments: 0,
-    cancelledAppointments: 0,
-    totalAppointments: 0,
-    totalRevenue: 0,
-    monthlyRevenue: 0,
-    patientSatisfaction: 0,
-    averageWaitTime: 0,
-    followUpRate: 0,
-    ageGroups: {
-      under18: 0,
-      age18to35: 0,
-      age36to50: 0,
-      age51to65: 0,
-      above65: 0
-    },
-    genderDistribution: {
-      male: 0,
-      female: 0,
-      other: 0
-    },
-    appointmentTypes: {} as Record<string, number>
-  })
+  const [stats, setStats] = useState(() => {
+    const totalPatients = Math.floor(Math.random() * 1000) + 500; // 500 - 1500
+    const activePatients = Math.floor(totalPatients * (Math.random() * 0.3 + 0.5)); // 50% - 80% of totalPatients
+    const newPatients = Math.floor(Math.random() * 100) + 20; // 20 - 120
+  
+    const completedAppointments = Math.floor(Math.random() * 500) + 200; // 200 - 700
+    const cancelledAppointments = Math.floor(Math.random() * 50); // 0 - 50
+    const pendingAppointments = Math.floor(Math.random() * 50); // 0 - 50
+    const totalAppointments = completedAppointments + cancelledAppointments + pendingAppointments;
+  
+    const patientRetentionRate = parseFloat(((activePatients / totalPatients) * 100).toFixed(2));
+    const totalRevenue = totalAppointments * (Math.floor(Math.random() * 50) + 10); // Revenue per appointment: ₹1000 - ₹5000
+    const monthlyRevenue = Math.floor(totalRevenue / 12);
+    const patientSatisfaction = parseFloat((Math.random() * 10 + 85).toFixed(2)); // 85% - 95%
+    const averageWaitTime = parseFloat((Math.random() * 20 + 10).toFixed(2)); // 10 - 30 mins
+    const followUpRate = parseFloat((Math.random() * 30 + 40).toFixed(2)); // 40% - 70%
+  
+    // Age Groups
+    const ageGroups = {
+      under18: Math.floor(totalPatients * (Math.random() * 0.1 + 0.05)), // 5% - 15%
+      age18to35: Math.floor(totalPatients * (Math.random() * 0.3 + 0.25)), // 25% - 55%
+      age36to50: Math.floor(totalPatients * (Math.random() * 0.2 + 0.15)), // 15% - 35%
+      age51to65: Math.floor(totalPatients * (Math.random() * 0.15 + 0.1)), // 10% - 25%
+      above65: Math.floor(totalPatients * (Math.random() * 0.1 + 0.05)) // 5% - 15%
+    };
+  
+    // Adjust age group distribution to match totalPatients
+    const ageTotal = Object.values(ageGroups).reduce((sum, val) => sum + val, 0);
+    ageGroups.above65 += totalPatients - ageTotal;
+  
+    // Gender Distribution
+    const male = Math.floor(totalPatients * (Math.random() * 0.5 + 0.3)); // 30% - 80%
+    const female = Math.floor(totalPatients * (Math.random() * 0.4 + 0.2)); // 20% - 60%
+    const other = totalPatients - (male + female); // Ensuring total matches
+  
+    const genderDistribution = { male, female, other };
+  
+    // Appointment Types Distribution
+    const appointmentTypes = {
+      "General Checkup": Math.floor(totalAppointments * 0.4), // 40% of totalAppointments
+      "Dental": Math.floor(totalAppointments * 0.2), // 20%
+      "Physiotherapy": Math.floor(totalAppointments * 0.15), // 15%
+      "Cardiology": Math.floor(totalAppointments * 0.1), // 10%
+      "Dermatology": Math.floor(totalAppointments * 0.15) // 15%
+    };
+  
+    return {
+      totalPatients,
+      activePatients,
+      newPatients,
+      patientRetentionRate,
+      pendingAppointments,
+      completedAppointments,
+      cancelledAppointments,
+      totalAppointments,
+      totalRevenue,
+      monthlyRevenue,
+      patientSatisfaction,
+      averageWaitTime,
+      followUpRate,
+      ageGroups,
+      genderDistribution,
+      appointmentTypes
+    };
+  });
+  
 
   useEffect(() => {
     if (!authLoading && !doctor) {

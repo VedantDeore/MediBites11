@@ -66,11 +66,11 @@ export default function SettingsPage() {
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
                     <Label htmlFor="site-name">Site Name</Label>
-                    <Input id="site-name" defaultValue="MediCare" />
+                    <Input id="site-name" defaultValue="MediBites" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="admin-email">Admin Email</Label>
-                    <Input id="admin-email" type="email" defaultValue="admin@medicare.com" />
+                    <Input id="admin-email" type="email" defaultValue="admin@MediBites.com" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="timezone">Timezone</Label>
@@ -124,7 +124,7 @@ export default function SettingsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="notification-email">Notification Email</Label>
-                    <Input id="notification-email" type="email" defaultValue="alerts@medicare.com" />
+                    <Input id="notification-email" type="email" defaultValue="alerts@MediBites.com" />
                   </div>
                 </CardContent>
                 <CardFooter>

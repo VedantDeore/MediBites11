@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast'
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MediCare - Your Health, Our Priority",
+  title: "MediBites - Your Health, Our Priority",
   description: "Advanced healthcare solutions with personalized care",
     generator: 'v0.dev'
 }

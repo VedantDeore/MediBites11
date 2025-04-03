@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
+import { v4 as uuidv4 } from "uuid"
 import {
   Calendar,
   Download,
@@ -59,58 +60,108 @@ import {
 } from "@/lib/patient-service"
 
 export default function PatientsPage() {
-  const router = useRouter()
-  const { doctor } = useDoctorAuth()
-  const [searchQuery, setSearchQuery] = useState("")
-  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive" | "new">("all")
-  const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(null)
-  const [isPatientDetailsOpen, setIsPatientDetailsOpen] = useState(false)
-  const [isAddPatientOpen, setIsAddPatientOpen] = useState(false)
-  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false)
-  const [isUploadDocumentOpen, setIsUploadDocumentOpen] = useState(false)
-  const [patients, setPatients] = useState<PatientData[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
+  const router = useRouter();
+  const { doctor } = useDoctorAuth();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"all" | "active" | "inactive" | "new">("all");
+  const [selectedPatient, setSelectedPatient] = useState<PatientData | null>(null);
+  const [isPatientDetailsOpen, setIsPatientDetailsOpen] = useState(false);
+  const [isAddPatientOpen, setIsAddPatientOpen] = useState(false);
+  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
+  const [isUploadDocumentOpen, setIsUploadDocumentOpen] = useState(false);
+  const [patients, setPatients] = useState<PatientData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
   // Form states
-  const [newNote, setNewNote] = useState("")
-  const [documentFile, setDocumentFile] = useState<File | null>(null)
-  const [documentName, setDocumentName] = useState("")
-  const [documentType, setDocumentType] = useState("medical-record")
-  const [uploadingDocument, setUploadingDocument] = useState(false)
-  const [savingNote, setSavingNote] = useState(false)
-  const [editingMedicalInfo, setEditingMedicalInfo] = useState(false)
+  const [newNote, setNewNote] = useState("");
+  const [documentFile, setDocumentFile] = useState<File | null>(null);
+  const [documentName, setDocumentName] = useState("");
+  const [documentType, setDocumentType] = useState("medical-record");
+  const [uploadingDocument, setUploadingDocument] = useState(false);
+  const [savingNote, setSavingNote] = useState(false);
+  const [editingMedicalInfo, setEditingMedicalInfo] = useState(false);
   const [medicalInfoForm, setMedicalInfoForm] = useState<PatientMedicalInfo>({
     bloodGroup: "",
     allergies: [],
     chronicConditions: [],
     medications: [],
-  })
-  const [savingMedicalInfo, setSavingMedicalInfo] = useState(false)
-  const [newAllergy, setNewAllergy] = useState("")
-  const [newCondition, setNewCondition] = useState("")
-  const [newMedication, setNewMedication] = useState("")
-
-  // Fetch patients data
+  });
+  const [savingMedicalInfo, setSavingMedicalInfo] = useState(false);
+  const [newAllergy, setNewAllergy] = useState("");
+  const [newCondition, setNewCondition] = useState("");
+  const [newMedication, setNewMedication] = useState("");
+  
+  // Fake Patient Data Generator
+  const generateRandomPatient = (): PatientData => {
+    const names = ["Aryan Sharma", "Sanya Kapoor", "Rohan Mehta", "Priya Verma", "Kabir Singh", "Aditi Nair"];
+    const genders = ["male", "female", "other"];
+    const statuses = ["active", "inactive", "new"];
+    const conditions = ["Diabetes", "Hypertension", "Asthma", "Heart Disease"];
+    const allergies = ["Pollen", "Dust", "Peanuts", "Shellfish"];
+    const medications = ["Metformin", "Ibuprofen", "Paracetamol"];
+    const bloodGroups = ["A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-"];
+  
+    const randomItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+  
+    return {
+      id: uuidv4(),
+      name: randomItem(names),
+      email: `${Math.random().toString(36).substring(7)}@gmail.com`,
+      phone: `+91 ${Math.floor(6000000000 + Math.random() * 4000000000)}`,
+      age: Math.floor(Math.random() * 50) + 18, // Between 18-68
+      gender: randomItem(genders),
+      address: `Flat No. ${Math.floor(Math.random() * 500)}, Street ${Math.floor(Math.random() * 100)}, City XYZ`,
+      profilePicture: `https://randomuser.me/api/portraits/${randomItem(["men", "women"])}/${Math.floor(Math.random() * 100)}.jpg`,
+      registrationDate: new Date(Date.now() - Math.random() * 10000000000).toISOString().split("T")[0],
+      lastVisit: new Date(Date.now() - Math.random() * 5000000000).toISOString().split("T")[0],
+      medicalInfo: {
+        bloodGroup: randomItem(bloodGroups),
+        allergies: [randomItem(allergies)],
+        chronicConditions: [randomItem(conditions)],
+        medications: [randomItem(medications)],
+      },
+      appointments: Array.from({ length: Math.floor(Math.random() * 5) }, () => ({
+        id: uuidv4(),
+        date: new Date(Date.now() - Math.random() * 1000000000).toISOString().split("T")[0],
+        time: `${Math.floor(Math.random() * 12) + 1}:${Math.random() > 0.5 ? "30" : "00"} ${Math.random() > 0.5 ? "AM" : "PM"}`,
+        type: randomItem(["General Checkup", "Dental", "Cardiology"]),
+        status: randomItem(["completed", "pending", "cancelled"]),
+      })),
+      status: randomItem(statuses),
+      nextAppointment: Math.random() > 0.5
+        ? {
+            date: new Date(Date.now() + Math.random() * 1000000000).toISOString().split("T")[0],
+            time: `${Math.floor(Math.random() * 12) + 1}:${Math.random() > 0.5 ? "30" : "00"} ${Math.random() > 0.5 ? "AM" : "PM"}`,
+          }
+        : undefined,
+      treatmentPlan: Math.random() > 0.3 ? "Follow-up in 3 months with dietary changes." : "",
+    };
+  };
+  
+  // Simulated Fetch Patients Function
   useEffect(() => {
     async function fetchPatients() {
-      if (!doctor?.id) return
-
+      if (!doctor?.id) return;
+  
       try {
-        setLoading(true)
-        setError(null)
-        const patientData = await getPatientsByDoctor(doctor.id)
-        setPatients(patientData)
+        setLoading(true);
+        setError(null);
+  
+        // Simulate fetching by generating fake patients
+        const fakePatients = Array.from({ length: 10 }, generateRandomPatient);
+        setPatients(fakePatients);
       } catch (err) {
-        console.error("Error fetching patients:", err)
-        setError("Failed to load patients. Please try again.")
+        console.error("Error fetching patients:", err);
+        setError("Failed to load patients. Please try again.");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
-
-    fetchPatients()
-  }, [doctor])
+  
+    fetchPatients();
+  }, [doctor]);
+  
 
   // Handle patient click - fetch detailed patient info
   const handlePatientClick = async (patient: PatientData) => {
